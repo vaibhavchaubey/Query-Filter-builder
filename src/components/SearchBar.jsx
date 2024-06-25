@@ -88,7 +88,6 @@ const SearchBar = () => {
 
   const handleRemove = (query) => {
     setSearchQueries(searchQueries.filter((o) => o.id !== query.id));
-    console.log(value);
   };
 
   return (
