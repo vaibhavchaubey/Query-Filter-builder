@@ -12,8 +12,6 @@ const attributes = [
   'severity.text',
 ];
 
-
-
 const CloseIcon = (onClick) => (
   <svg
     className="h-4 w-4 ml-1 cursor-pointer"
@@ -108,7 +106,7 @@ const SearchBar = () => {
                 key={index}
                 className="flex items-center bg-gray-200 px-2 py-1 m-1 rounded"
               >
-                <span>{`${query.attribute} ${query.operation} ${query.value} ${query.id}`}</span>
+                <span>{`${query.attribute} ${query.operation} ${query.value}`}</span>
                 <CloseIcon />
               </div>
             </button>
