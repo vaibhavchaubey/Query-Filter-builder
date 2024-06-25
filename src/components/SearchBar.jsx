@@ -22,6 +22,7 @@ const SearchBar = () => {
   const [value, setValue] = useState('');
   const [valueQuery, setValueQuery] = useState('');
   const [searchQueries, setSearchQueries] = useState([]);
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const inputRef = useRef(null);
 
   const handleInputChange = (event) => {
@@ -119,10 +120,11 @@ const SearchBar = () => {
             onChange={handleInputChange}
             onKeyDown={handleKeyPress}
             ref={inputRef}
+            onClick={() => setIsDropDownOpen(true)}
           />
         </div>
 
-        {step < 3 && (
+        {step < 3 && isDropDownOpen && (
           <ul className="absolute top-full left-0 w-full bg-white border max-h-60 overflow-y-auto z-10">
             {getDropdownOptions().map((option, index) => (
               <li
