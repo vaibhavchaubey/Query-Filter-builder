@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import 'tailwindcss/tailwind.css';
 
 const attributes = [
@@ -12,7 +12,7 @@ const attributes = [
   'severity.text',
 ];
 
-const CloseIcon = (onClick) => (
+const CloseIcon = () => (
   <svg
     className="h-4 w-4 ml-1 cursor-pointer"
     xmlns="http://www.w3.org/2000/svg"
@@ -38,6 +38,7 @@ const SearchBar = () => {
   const [value, setValue] = useState('');
   const [valueQuery, setValueQuery] = useState('');
   const [searchQueries, setSearchQueries] = useState([]);
+  const inputRef = useRef(null)
 
   const handleInputChange = (event) => {
     console.log(event.target.value);
@@ -58,6 +59,7 @@ const SearchBar = () => {
     } else if (step === 2) {
       setSelectedOperation(value);
       setStep(3);
+      inputRef.current.focus();
     }
   };
 
@@ -126,6 +128,8 @@ const SearchBar = () => {
             }
             onChange={handleInputChange}
             onKeyPress={handleKeyPress}
+            ref={inputRef}
+
           />
         </div>
 
