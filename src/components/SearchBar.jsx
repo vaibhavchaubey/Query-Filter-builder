@@ -47,9 +47,9 @@ const SearchBar = () => {
   };
 
   const handleKeyPress = (event) => {
-    console.log(event.key);
     if (event.key === 'Backspace' && step === 2) {
       setSelectedAttribute('');
+      setValue('');
       setStep(1);
     }
     if (event.key === 'Backspace' && step === 3 && value === '') {
@@ -88,6 +88,7 @@ const SearchBar = () => {
 
   const handleRemove = (query) => {
     setSearchQueries(searchQueries.filter((o) => o.id !== query.id));
+    console.log(value);
   };
 
   return (
