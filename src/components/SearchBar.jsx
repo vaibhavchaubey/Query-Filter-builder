@@ -36,16 +36,18 @@ const SearchBar = () => {
   const [selectedAttribute, setSelectedAttribute] = useState('');
   const [selectedOperation, setSelectedOperation] = useState('');
   const [value, setValue] = useState('');
+  const [valueQuery, setValueQuery] = useState('');
   const [searchQueries, setSearchQueries] = useState([]);
 
   const handleInputChange = (event) => {
     console.log(event.target.value);
     if (selectedAttribute === '') {
-      setValue(event.target.value);
+      setValueQuery(event.target.value);
     } else {
       const index = event.target.value.split(' ').length - 1;
       const typedValue = event.target.value.split(' ')[index];
       setValue(`${typedValue}`);
+      setValueQuery('')
     }
   };
 
@@ -80,7 +82,7 @@ const SearchBar = () => {
   const getDropdownOptions = () => {
     if (step === 1) {
       const op = attributes.filter((attr) =>
-        attr.toLowerCase().includes(value.toLowerCase())
+        attr.toLowerCase().includes(valueQuery.toLowerCase())
       );
 
       return op;
@@ -117,7 +119,7 @@ const SearchBar = () => {
             className="border p-2 w-full"
             value={
               step === 1
-                ? value
+                ? valueQuery
                 : step === 2
                 ? selectedAttribute
                 : `${selectedAttribute} ${selectedOperation} ${value}`
