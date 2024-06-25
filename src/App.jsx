@@ -1,6 +1,5 @@
 import React from 'react';
-import SearchBar from './components/SearchBar';
-
+import { SearchBar } from './components';
 function App() {
   return (
     <div className="App">

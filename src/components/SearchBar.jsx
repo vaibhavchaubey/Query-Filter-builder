@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import 'tailwindcss/tailwind.css';
+import CloseIcon from './CloseIcon';
 
 const attributes = [
   'container_id',
@@ -12,23 +13,6 @@ const attributes = [
   'severity.text',
 ];
 
-const CloseIcon = () => (
-  <svg
-    className="h-4 w-4 ml-1 cursor-pointer"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      d="M6 18L18 6M6 6l12 12"
-    />
-  </svg>
-);
-
 const operations = ['=', '!=', 'IN', 'NOT_IN', 'LIKE', 'NOT_LIKE', 'CONTAINS'];
 
 const SearchBar = () => {
@@ -38,17 +22,16 @@ const SearchBar = () => {
   const [value, setValue] = useState('');
   const [valueQuery, setValueQuery] = useState('');
   const [searchQueries, setSearchQueries] = useState([]);
-  const inputRef = useRef(null)
+  const inputRef = useRef(null);
 
   const handleInputChange = (event) => {
-    console.log(event.target.value);
     if (selectedAttribute === '') {
       setValueQuery(event.target.value);
     } else {
       const index = event.target.value.split(' ').length - 1;
       const typedValue = event.target.value.split(' ')[index];
       setValue(`${typedValue}`);
-      setValueQuery('')
+      setValueQuery('');
     }
   };
 
@@ -59,11 +42,20 @@ const SearchBar = () => {
     } else if (step === 2) {
       setSelectedOperation(value);
       setStep(3);
-      inputRef.current.focus();
     }
+    inputRef.current.focus();
   };
 
   const handleKeyPress = (event) => {
+    console.log(event.key);
+    if (event.key === 'Backspace' && step === 2) {
+      setSelectedAttribute('');
+      setStep(1);
+    }
+    if (event.key === 'Backspace' && step === 3 && value === '') {
+      setSelectedOperation('');
+      setStep(2);
+    }
     if (event.key === 'Enter' && step === 3) {
       setSearchQueries([
         ...searchQueries,
@@ -95,8 +87,6 @@ const SearchBar = () => {
   };
 
   const handleRemove = (query) => {
-    console.log('handleRemove: ', query);
-    console.log('id: ', query.id);
     setSearchQueries(searchQueries.filter((o) => o.id !== query.id));
   };
 
@@ -127,9 +117,8 @@ const SearchBar = () => {
                 : `${selectedAttribute} ${selectedOperation} ${value}`
             }
             onChange={handleInputChange}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyPress}
             ref={inputRef}
-
           />
         </div>
 
